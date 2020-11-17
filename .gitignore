@@ -1,0 +1,20 @@
+#compile class file
+*.class
+
+#log file
+*.log
+
+#package files
+*.jar
+*.war
+*.zip
+*.rar
+*.ear
+
+#idea configuration files
+.idea
+
+/out
+
+#module setting file of intelliJ Idea
+*.iml
