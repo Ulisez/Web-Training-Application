@@ -16,5 +16,7 @@
 
 /out
 
+/target
+
 #module setting file of intelliJ Idea
 *.iml
