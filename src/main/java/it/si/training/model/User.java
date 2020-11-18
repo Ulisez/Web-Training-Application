@@ -9,16 +9,16 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private String name;
-    private String username;
+    private String lastname;
     private String address;
     private String phone;
 
     public User() {
     }
 
-    public User(String name, String username, String address, String phone) {
+    public User(String name, String lastname, String address, String phone) {
         this.name = name;
-        this.username = username;
+        this.lastname = lastname;
         this.address = address;
         this.phone = phone;
     }
@@ -31,12 +31,12 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getAddress() {
@@ -59,7 +59,7 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", username='" + username + '\'' +
+                ", lastname='" + lastname + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
