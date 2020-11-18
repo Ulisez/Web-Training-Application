@@ -57,20 +57,20 @@
         <thead class="thead-dark">
         <tr>
           <th scope="col">id</th>
-          <th scope="col">Name</th>
-          <th scope="col">Lastname</th>
-          <th scope="col">address</th>
-          <th scope="col">phone</th>
-          <th scope="col">update</th>
-          <th scope="col">delete</th>
-          <th scope="col">view your cars</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Cognome</th>
+          <th scope="col">Indirizzo</th>
+          <th scope="col">Telefono</th>
+          <th scope="col">Aggiorna</th>
+          <th scope="col">Elimina</th>
+          <th scope="col">Mostra Auto</th>
           </tr>
        </thead>
      <tbody>
 
      <c:forEach items="${users}" var="user">
          <tr>
-             <td>500</td>
+             <td>${user.userId}</td>
              <td>${user.name}</td>
              <td>${user.lastname}</td>
              <td>${user.address}</td>
@@ -79,19 +79,19 @@
                      <%-- URL action Da modificare, mi serviva per verificare il funzionamento --%>
              <form action="/Web_Training_Application_war_exploded" method="post">
                  <input type="hidden" name="userId" value="${user.name}">
-                 <input type="submit" alt="Submit" width="36" height="36" src="">
+                 <button class="btn bg-warning text-white" type="submit">Aggiorna</button>
              </form>
              </td>
              <td>
                  <form action="/" method="post">
                      <input type="hidden" name="userId" value="${user.name}">
-                     <input type="submit" alt="Submit" width="36" height="36" src="">
+                     <button class="btn bg-danger text-white" type="submit">Elimina</button>
                  </form>
              </td>
              <td>
                  <form action="/" method="post">
                      <input type="hidden" name="userId" value="${user.name}">
-                     <input type="submit" alt="Submit" width="36" height="36" src="">
+                     <button class="btn bg-info text-white" type="submit">Auto</button>
                  </form>
              </td>
          </tr>

@@ -1,5 +1,8 @@
 package it.si.training.controller;
 
+import it.si.training.DAOImpl.CarDAOJDBCImpl;
+import it.si.training.model.Car;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +15,12 @@ public class CarController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       req.getRequestDispatcher("car.jsp").forward(req,resp);
+        CarDAOJDBCImpl carDao = new CarDAOJDBCImpl();
+        for (Car car: carDao.findAll()
+             ) {
+            System.out.println(car);
+        }
+        req.getRequestDispatcher("car.jsp").forward(req,resp);
     }
 
     @Override

@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Cars</title>
+
 </head>
 
 <body>
@@ -17,7 +18,9 @@
     <%@include file="header.html" %>
 </header>
 
-<h1>Benvenuto nel nostro Dealer</h1>
+<div>
+    <%@include file="bannerCar.html" %>
+</div>
 
 
 <footer>

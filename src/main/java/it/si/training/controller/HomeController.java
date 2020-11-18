@@ -1,6 +1,7 @@
 
 package it.si.training.controller;
 
+import it.si.training.DAOImpl.UserDAOJDBCImpl;
 import it.si.training.model.User;
 
 import javax.servlet.ServletException;
@@ -28,13 +29,15 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<User> list = new ArrayList<User>();
-        list.add(new User("Pluto","pippo","milano","365-896-4565"));
+        UserDAOJDBCImpl userDAO = new UserDAOJDBCImpl();
+
+       /* list.add(new User("Pluto","pippo","milano","365-896-4565"));
         list.add(new User("Mirko","brea","padova","365-896-4565"));
         list.add(new User("Ulises","sanchez","vanzaghello","365-896-4565"));
-        list.add(new User("Ezequiel","Perez","Magnago","365-896-4565"));
+        list.add(new User("Ezequiel","Perez","Magnago","365-896-4565")); */
 
-        req.setAttribute("users",list);
+        req.setAttribute("users",userDAO.findAll());
+
         //inoltra il controllo a home.jsp che si occuperà di visualizzare i dati
         req.getRequestDispatcher("home.jsp").forward(req, resp);
 

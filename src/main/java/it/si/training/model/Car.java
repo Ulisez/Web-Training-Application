@@ -4,21 +4,30 @@ import java.io.Serializable;
 
 public class Car implements Serializable {
 
-    private String model;
+    private Long carId;
     private String brand;
-    private double price;
-    private String color;
+    private String model;
     private String category;
+    private double price;
 
     public Car() {
     }
 
-    public Car(String model, String brand, double price, String color, String category) {
-        this.model = model;
+    public Car( Long carId, String brand, String model, String category, double price) {
+        this.carId = carId;
         this.brand = brand;
-        this.price = price;
-        this.color = color;
+        this.model = model;
         this.category = category;
+        this.price = price;
+
+    }
+
+    public Long getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 
     public String getModel() {
@@ -45,13 +54,6 @@ public class Car implements Serializable {
         this.price = price;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 
     public String getCategory() {
         return category;
@@ -64,11 +66,11 @@ public class Car implements Serializable {
     @Override
     public String toString() {
         return "Car{" +
-                "model='" + model + '\'' +
+                "carId=" + carId +
                 ", brand='" + brand + '\'' +
-                ", price=" + price +
-                ", color='" + color + '\'' +
+                ", model='" + model + '\'' +
                 ", category='" + category + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

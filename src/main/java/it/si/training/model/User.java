@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
+    private Long userId;
     private String name;
     private String lastname;
     private String address;
@@ -16,7 +17,8 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String name, String lastname, String address, String phone) {
+    public User(Long userId, String name, String lastname, String address, String phone) {
+        this.userId = userId;
         this.name = name;
         this.lastname = lastname;
         this.address = address;
@@ -55,10 +57,19 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
