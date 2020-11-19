@@ -22,8 +22,6 @@
     <%-- CNN font awesone for icons--%>
     <script src="https://kit.fontawesome.com/90add562c4.js" crossorigin="anonymous"></script>
 
-    
-
 </head>
 
 <body>
@@ -46,7 +44,49 @@
     </div>
 </div>
 
+
 <%-- container for show operation in dinamically mode  --%>
+
+
+<!-- model pop-up senction  -->
+<div id="updateModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+            <h2>Update</h2>
+            <span class="close">&times;</span>
+        </div>
+        <!-- The section form into the modal pop-up -->
+        <div class="modal-body">
+            <form method="post" action="<c:url value="/user/update"/>">
+                <div class="form-group">
+                    <input type="hidden"  id="inputid" name="userId">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Inserire il nome" name="name">
+                </div>
+                <div class="form-group">
+                    <label>Cognome</label>
+                    <input type="text" class="form-control" id="inputLastName" placeholder="Inserire il cognome" name="lastname">
+                </div>
+                <div class="form-group">
+                    <label>Indirizzo</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="Inserire l'indirizzo" name="address">
+                </div>
+                <div class="form-group">
+                    <label>Numero telefonico</label>
+                    <input type="text" class="form-control" id="inputPhone" placeholder="Inserire il numero" name="phone">
+                </div>
+                <button type="submit" class="btn btn-dark">Aggiorna</button>
+            </form>
+        </div>
+        <!-- The footer section into the modal pop-up -->
+        <div class="modal-footer bg-dark text-white">
+            <h3>Aggiorna il cliente</h3>
+        </div>
+    </div>
+</div>
 
 <%-- table that show users data   --%>
 <h1 class="display-4 d-flex mb-4 justify-content-center" >Lista dei nostri clienti</h1>
@@ -76,21 +116,20 @@
              <td>${user.address}</td>
              <td>${user.phone} </td>
              <td>
-                     <%-- URL action Da modificare, mi serviva per verificare il funzionamento --%>
-             <form action="/Web_Training_Application_war_exploded" method="post">
-                 <input type="hidden" name="userId" value="${user.name}">
-                 <button class="btn bg-warning text-white" type="submit">Aggiorna</button>
-             </form>
+                 <button class="btn bg-warning text-white" type="button" onclick="openModel(['${user.name}','${user.lastname}',
+                         '${user.address}', '${user.phone}', '${user.userId}'])">Aggiorna</button>
+
              </td>
              <td>
-                 <form action="/" method="post">
-                     <input type="hidden" name="userId" value="${user.name}">
-                     <button class="btn bg-danger text-white" type="submit">Elimina</button>
+                 <c:set var="userId" value="${user.userId}"></c:set>
+                 <form method="post" action="<c:url value="/user/delete"/>">
+                 <input type="hidden" name="userId" value="${userId}">
+                 <button class="btn bg-danger text-white" type="submit"  id="${userId}">Elimina</button>
                  </form>
              </td>
              <td>
                  <form action="/" method="post">
-                     <input type="hidden" name="userId" value="${user.name}">
+                     <input type="hidden" name="userId" value="${user.userId}">
                      <button class="btn bg-info text-white" type="submit">Auto</button>
                  </form>
              </td>
@@ -102,11 +141,46 @@
     </div>
 </div>
 
-<p><c:out value="${user.name}"/></p>
-
 <%-- direttiva per includere il footer  --%>
 <footer>
     <%@include file="footer.html" %>
 </footer>
+
+<script type="text/javascript">
+
+    var modal = document.getElementById("updateModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+     function openModel(userdata) {
+         document.getElementById('inputName').value = '' +userdata[0];
+         document.getElementById('inputLastName').value = '' +userdata[1];
+         document.getElementById('inputAddress').value = '' +userdata[2];
+         document.getElementById('inputPhone').value = '' +userdata[3];
+         document.getElementById('inputid').value = '' +userdata[4];
+         modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    function confirmOperation(username){
+       var result = confirm("Sei sicuro di voler eliminare" + " " + username);
+       if(result){
+       }
+    }
+
+</script>
 </body>
 </html>

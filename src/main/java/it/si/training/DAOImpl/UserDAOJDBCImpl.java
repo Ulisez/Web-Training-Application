@@ -29,10 +29,34 @@ public class UserDAOJDBCImpl implements UserDAO {
     }
 
     public void delete(Long id) {
+     String deleteQuery = "DELETE FROM users WHERE userId = ?";
+     try {
+         PreparedStatement statement = dbConnection.getConnection().prepareStatement(deleteQuery);
+         statement.setLong(1,id);
+        int result = statement.executeUpdate();
+        System.out.println("Operazione di eliminazione " +result);
 
+     }catch (SQLException e){
+         System.out.println("Errore nell'operazione di eliminazione" + e.getMessage());
+     }
     }
 
     public void update(User user) {
+        //query per aggiornare i dati dell'utente passato come parametro
+        String updateQuery = "UPDATE users SET firstname=? ,"+
+                "lastname=?, address=?, phone=?" + "WHERE userId=?";
+        try {
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(updateQuery);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getLastname());
+            statement.setString(3, user.getAddress());
+            statement.setString(4, user.getPhone());
+            statement.setLong(5, user.getUserId());
+           int resultOperation = statement.executeUpdate();
+           System.out.println("L'utente " +user.getName() + " è stato aggiornato e il risultato dell'operazione è " +resultOperation);
+        }catch (SQLException e){
+            System.out.println("L'operazione di aggiornamento ha causato un problema" + e.getMessage());
+        }
 
     }
 
