@@ -18,14 +18,13 @@ public class CarDAOJDBCImpl implements CarDAO {
     public CarDAOJDBCImpl() {
         try {
             dbConnection = DatabaseConnection.getIstance();
-            System.out.println(dbConnection.getConnection());
         }catch (SQLException e){
             System.out.println("Errore di connessione" + e.getSQLState());
         }
     }
 
-    public long save(Car element) {
-        return 0;
+    public void save(Car element) {
+
     }
 
     public void delete(Long id) {
@@ -58,9 +57,33 @@ public class CarDAOJDBCImpl implements CarDAO {
             }
 
         }catch (SQLException e){
-            System.out.println("errore nel recupero degli utenti" + e.getMessage());
+            System.out.println("errore nel recupero delle macchine" + e.getMessage());
         }
 
         return cars;
+    }
+
+    @Override
+    public Car findCar(Long id) {
+        Car car = null;
+        String findQuery = "SELECT* FROM cars WHERE carId=?";
+        try {
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(findQuery);
+            statement.setLong(1,id);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()){
+                car = new Car();
+                car.setCarId(result.getLong(1));
+                car.setBrand(result.getString(2));
+                car.setModel(result.getString(3));
+                car.setCategory(result.getString(4));
+                car.setPrice(result.getDouble(5));
+            }
+
+        }catch (SQLException e){
+            System.out.println("Errore nel trovare l'auto " + e.getMessage());
+        }
+        return car;
     }
 }

@@ -16,7 +16,7 @@ public interface DAOGeneric<T> {
      * @return
      */
 
-    public long save(T element);
+    public void save(T element);
 
     /**
      * Elimina dalla base diti l'oggetto il cui id corrisponde con quello passato come parametro
@@ -35,4 +35,5 @@ public interface DAOGeneric<T> {
      * @return la lista degli elementi di tipo T
      */
     List<T> findAll();
+
 }

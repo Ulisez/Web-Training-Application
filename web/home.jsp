@@ -22,6 +22,8 @@
     <%-- CNN font awesone for icons--%>
     <script src="https://kit.fontawesome.com/90add562c4.js" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="/web/META-INF/resources/css/style.css">
+
 </head>
 
 <body>
@@ -40,7 +42,6 @@
     <p>Abbiamo a disposizione un catalogo enorme di auto</p>
     <div class="container d-flex justify-content-center ">
         <a class="btn btn-primary btn-lg mr-md-3 " href="${carUrl}" role="button">Visualizza le auto</a>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Aggiungi utente</a>
     </div>
 </div>
 
@@ -48,7 +49,7 @@
 <%-- container for show operation in dinamically mode  --%>
 
 
-<!-- model pop-up senction  -->
+<!-- model pop-up senction -->
 <div id="updateModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
@@ -81,65 +82,100 @@
                 <button type="submit" class="btn btn-dark">Aggiorna</button>
             </form>
         </div>
-        <!-- The footer section into the modal pop-up -->
+        <!- The footer section into the modal pop-up ->
         <div class="modal-footer bg-dark text-white">
             <h3>Aggiorna il cliente</h3>
         </div>
     </div>
 </div>
 
-<%-- table that show users data   --%>
-<h1 class="display-4 d-flex mb-4 justify-content-center" >Lista dei nostri clienti</h1>
 
-<div class="container mb-3 mt-4">
-    <div class="table-responsive">
-    <table class="table">
-        <thead class="thead-dark">
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Cognome</th>
-          <th scope="col">Indirizzo</th>
-          <th scope="col">Telefono</th>
-          <th scope="col">Aggiorna</th>
-          <th scope="col">Elimina</th>
-          <th scope="col">Mostra Auto</th>
-          </tr>
-       </thead>
-     <tbody>
 
-     <c:forEach items="${users}" var="user">
-         <tr>
-             <td>${user.userId}</td>
-             <td>${user.name}</td>
-             <td>${user.lastname}</td>
-             <td>${user.address}</td>
-             <td>${user.phone} </td>
-             <td>
-                 <button class="btn bg-warning text-white" type="button" onclick="openModel(['${user.name}','${user.lastname}',
-                         '${user.address}', '${user.phone}', '${user.userId}'])">Aggiorna</button>
 
-             </td>
-             <td>
-                 <c:set var="userId" value="${user.userId}"></c:set>
-                 <form method="post" action="<c:url value="/user/delete"/>">
-                 <input type="hidden" name="userId" value="${userId}">
-                 <button class="btn bg-danger text-white" type="submit"  id="${userId}">Elimina</button>
-                 </form>
-             </td>
-             <td>
-                 <form action="/" method="post">
-                     <input type="hidden" name="userId" value="${user.userId}">
-                     <button class="btn bg-info text-white" type="submit">Auto</button>
-                 </form>
-             </td>
-         </tr>
-     </c:forEach>
+<div class="container-fluid">
+    <div class="row">
+        <%-- form update user data   --%>
+        <div class="col-lg-4">
+            <h1 class="display-5 d-flex mb-4 justify-content-center" >Aggiungi un nuovo cliente</h1>
+            <form method="post" action="<c:url value="/user/save"/>">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" placeholder="Inserire il nome" name="name">
+                </div>
+                <div class="form-group">
+                    <label>Cognome</label>
+                    <input type="text" class="form-control" placeholder="Inserire il cognome" name="lastname">
+                </div>
+                <div class="form-group">
+                    <label>Indirizzo</label>
+                    <input type="text" class="form-control"  placeholder="Inserire l'indirizzo" name="address">
+                </div>
+                <div class="form-group">
+                    <label>Numero telefonico</label>
+                    <input type="text" class="form-control"  placeholder="Inserire il numero" name="phone">
+                </div>
+                <button type="submit" class="btn btn-dark">Aggiungi</button>
+                <button type="reset" class="btn btn-primary">Reset</button>
+            </form>
+        </div>
 
-     </tbody>
-    </table>
+            <%-- table that show users data   --%>
+        <div class="col-lg-8">
+            <h1 class="display-5 d-flex mb-4 justify-content-center" >Lista dei nostri clienti</h1>
+            <div class="container mb-3 mt-4">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Cognome</th>
+                            <th scope="col">Indirizzo</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Aggiorna</th>
+                            <th scope="col">Elimina</th>
+                            <th scope="col">Mostra Auto</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <c:forEach items="${users}" var="user">
+                            <tr>
+                                <td>${user.userId}</td>
+                                <td>${user.name}</td>
+                                <td>${user.lastname}</td>
+                                <td>${user.address}</td>
+                                <td>${user.phone} </td>
+                                <td>
+                                    <button class="btn bg-warning text-white" type="button" onclick="openModel(['${user.name}','${user.lastname}',
+                                            '${user.address}', '${user.phone}', '${user.userId}'])">Aggiorna</button>
+
+                                </td>
+                                <td>
+                                    <c:set var="name" value="${user.name}"></c:set>
+                                    <form method="post" action="<c:url value="/user/delete"/>">
+                                        <input type="hidden" name="userId" value="${user.userId}">
+                                        <button class="btn bg-danger text-white" type="submit" id="${name}">Elimina</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="<c:url value="/user/show/cars"/>" method="post">
+                                        <input type="hidden" name="name" value="${user.name}">
+                                        <input type="hidden" name="userId" value="${user.userId}">
+                                        <button class="btn bg-info text-white" type="submit">Auto</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <%-- direttiva per includere il footer  --%>
 <footer>
@@ -175,10 +211,8 @@
         }
     }
 
-    function confirmOperation(username){
-       var result = confirm("Sei sicuro di voler eliminare" + " " + username);
-       if(result){
-       }
+    function alertOperation(username){
+       window.alert( username + "Eliminato");
     }
 
 </script>

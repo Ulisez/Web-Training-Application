@@ -1,6 +1,7 @@
 package it.si.training.DAOImpl;
 
 import it.si.training.DAO.UserDAO;
+import it.si.training.model.Car;
 import it.si.training.model.User;
 import it.si.training.utility.DatabaseConnection;
 
@@ -24,8 +25,20 @@ public class UserDAOJDBCImpl implements UserDAO {
         }
     }
 
-    public long save(User user) {
-        return 0;
+    public void save(User user) {
+        String saveQuery = "INSERT INTO users (firstname, lastname, address, phone)"+
+                "VALUES(?,?,?,?)";
+        try {
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(saveQuery);
+            statement.setString(1,user.getName());
+            statement.setString(2,user.getLastname());
+            statement.setString(3,user.getAddress());
+            statement.setString(4,user.getPhone());
+
+            statement.executeUpdate();
+        }catch (SQLException e){
+
+        }
     }
 
     public void delete(Long id) {
@@ -53,7 +66,7 @@ public class UserDAOJDBCImpl implements UserDAO {
             statement.setString(4, user.getPhone());
             statement.setLong(5, user.getUserId());
            int resultOperation = statement.executeUpdate();
-           System.out.println("L'utente " +user.getName() + " è stato aggiornato e il risultato dell'operazione è " +resultOperation);
+           System.out.println("L'utente " +user.getName() + " è stato AGGIORNATO e il risultato dell'operazione è " +resultOperation);
         }catch (SQLException e){
             System.out.println("L'operazione di aggiornamento ha causato un problema" + e.getMessage());
         }
@@ -90,5 +103,30 @@ public class UserDAOJDBCImpl implements UserDAO {
         }
 
         return users;
+    }
+
+    public List<Car> findUserCars(Long userId) {
+        List<Car> cars = null;
+        String queryFindCars = "SELECT c.carId, c.brand, c.model, c.category, c.price FROM purchases p INNER JOIN cars c ON p.carId=c.carId and p.userId=?";
+        try{
+        PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(queryFindCars);
+        preparedStatement.setLong(1,userId);
+        ResultSet result = preparedStatement.executeQuery();
+        cars = new ArrayList<Car>();
+        while(result.next()){
+            Car car = new Car();
+            car.setCarId(Long.parseLong(result.getString(1)));
+            car.setBrand(result.getString(2));
+            car.setModel(result.getString(3));
+            car.setCategory(result.getString(4));
+            car.setPrice(Double.parseDouble(result.getString(5)));
+            cars.add(car);
+            System.out.println(car);
+        }
+
+        } catch (SQLException e ){
+            System.out.println("L'operazione di recupero delle macchine comprate dall'utente è fallita" + e.getMessage());
+        }
+        return cars;
     }
 }

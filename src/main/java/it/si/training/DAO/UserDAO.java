@@ -1,6 +1,9 @@
 package it.si.training.DAO;
 
+import it.si.training.model.Car;
 import it.si.training.model.User;
+
+import java.util.List;
 
 /**
  * UserDAO eredita tutti i metodi dell'interfaccia generica
@@ -8,4 +11,5 @@ import it.si.training.model.User;
  */
 public interface UserDAO extends DAOGeneric<User> {
 
+    public List<Car> findUserCars(Long userId);
 }
