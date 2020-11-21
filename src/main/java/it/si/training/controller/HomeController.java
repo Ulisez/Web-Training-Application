@@ -1,13 +1,17 @@
 
 package it.si.training.controller;
 
-import it.si.training.DAOImpl.UserDAOJDBCImpl;
+import it.si.training.DAO.UserDAO;
+import it.si.training.model.User;
+import it.si.training.utility.UserDaoFactory;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -18,21 +22,21 @@ import java.io.IOException;
 @WebServlet(value = "/")
 public class HomeController extends HttpServlet {
 
+    UserDAO<User> userDAO = null;
+
     public HomeController() {
 
     }
 
     @Override
+    public void init() throws ServletException {
+        userDAO = UserDaoFactory.getUserDAO("jpa");
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        UserDAOJDBCImpl userDAO = new UserDAOJDBCImpl();
-
-       /* list.add(new User("Pluto","pippo","milano","365-896-4565"));
-        list.add(new User("Mirko","brea","padova","365-896-4565"));
-        list.add(new User("Ulises","sanchez","vanzaghello","365-896-4565"));
-        list.add(new User("Ezequiel","Perez","Magnago","365-896-4565")); */
-
-        req.setAttribute("users",userDAO.findAll());
+        req.setAttribute("users",listUsers());
 
         //inoltra il controllo a home.jsp che si occuperà di visualizzare i dati
         req.getRequestDispatcher("home.jsp").forward(req, resp);
@@ -51,5 +55,9 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
+    }
+
+    private List<User> listUsers() {
+        return userDAO.findAll();
     }
 }

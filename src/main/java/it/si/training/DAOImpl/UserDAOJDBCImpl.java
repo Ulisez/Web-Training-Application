@@ -5,14 +5,13 @@ import it.si.training.model.Car;
 import it.si.training.model.User;
 import it.si.training.utility.DatabaseConnection;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOJDBCImpl implements UserDAO {
+public class UserDAOJDBCImpl implements UserDAO<User> {
 
    private DatabaseConnection dbConnection;
 
@@ -80,10 +79,13 @@ public class UserDAOJDBCImpl implements UserDAO {
     public List<User> findAll() {
         //lista di utenti che conterrà tutti gli utenti recuperati dalla base di dati
         List<User> users = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         String query = "SELECT* FROM users"; //select per recuperare tutti gli utenti
+
         try {
-            PreparedStatement statement = dbConnection.getConnection().prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery(); //seguire la query
+            statement = dbConnection.getConnection().prepareStatement(query);
+            resultSet = statement.executeQuery(); //seguire la query
 
            //scorrere l'intera tabella e per ogni riga recuperare tutti i dati
             while(resultSet.next()){
@@ -100,10 +102,13 @@ public class UserDAOJDBCImpl implements UserDAO {
 
         }catch (SQLException e){
             System.out.println("errore nel recupero degli utenti" + e.getMessage());
+        }finally {
+            close(statement,resultSet);
         }
 
         return users;
     }
+
 
     public List<Car> findUserCars(Long userId) {
         List<Car> cars = null;
@@ -127,6 +132,23 @@ public class UserDAOJDBCImpl implements UserDAO {
         } catch (SQLException e ){
             System.out.println("L'operazione di recupero delle macchine comprate dall'utente è fallita" + e.getMessage());
         }
+
         return cars;
     }
+
+    private void close(PreparedStatement statement, ResultSet resultSet) {
+        try {
+            if (statement!=null){
+                statement.close();
+            }
+            if (resultSet!=null){
+                resultSet.close();
+            }
+
+        }catch (Exception e){
+            System.out.println("L'operazione di chiusura è fallita" + e.getMessage());
+        }
+
+    }
+
 }

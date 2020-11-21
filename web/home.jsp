@@ -59,7 +59,7 @@
         </div>
         <!-- The section form into the modal pop-up -->
         <div class="modal-body">
-            <form method="post" action="<c:url value="/user/update"/>">
+            <form method="post" action="<c:url value="/user/saveorupdate"/>">
                 <div class="form-group">
                     <input type="hidden"  id="inputid" name="userId">
                 </div>
@@ -97,7 +97,7 @@
         <%-- form update user data   --%>
         <div class="col-lg-4">
             <h1 class="display-5 d-flex mb-4 justify-content-center" >Aggiungi un nuovo cliente</h1>
-            <form method="post" action="<c:url value="/user/save"/>">
+            <form method="post" action="<c:url value="/user/saveorupdate"/>">
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" class="form-control" placeholder="Inserire il nome" name="name">

@@ -2,7 +2,6 @@ package it.si.training.DAOImpl;
 
 import it.si.training.DAO.CarDAO;
 import it.si.training.model.Car;
-import it.si.training.model.User;
 import it.si.training.utility.DatabaseConnection;
 
 import java.sql.PreparedStatement;
@@ -11,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarDAOJDBCImpl implements CarDAO {
+public class CarDAOJDBCImpl implements CarDAO<Car> {
 
     private DatabaseConnection dbConnection;
 
@@ -23,7 +22,7 @@ public class CarDAOJDBCImpl implements CarDAO {
         }
     }
 
-    public void save(Car element) {
+    public void save(Car car) {
 
     }
 
@@ -31,7 +30,7 @@ public class CarDAOJDBCImpl implements CarDAO {
 
     }
 
-    public void update(Car element) {
+    public void update(Car car) {
 
     }
 
@@ -53,7 +52,8 @@ public class CarDAOJDBCImpl implements CarDAO {
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
-                        resultSet.getDouble(5)));
+                        resultSet.getString(5),
+                        resultSet.getDouble(6)));
             }
 
         }catch (SQLException e){

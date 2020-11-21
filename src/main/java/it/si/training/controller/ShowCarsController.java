@@ -1,6 +1,5 @@
 package it.si.training.controller;
 
-import it.si.training.DAO.UserDAO;
 import it.si.training.DAOImpl.UserDAOJDBCImpl;
 import it.si.training.model.Car;
 
@@ -17,7 +16,6 @@ public class ShowCarsController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("papapapapapapapapa"+ getServletName());
         doPost(req,resp);
     }
 

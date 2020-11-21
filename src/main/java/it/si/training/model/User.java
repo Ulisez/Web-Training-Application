@@ -1,17 +1,32 @@
 package it.si.training.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * @author Ulises Sanchez
  * Classe User ben utilizzata come object transfer e rappresentare l'oggetto user
  */
+
+@Entity
+@Table(name = "user")
 public class User implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_ID")
     private Long userId;
+
+    @Column(name = "first_name")
     private String name;
+
+    @Column(name = "last_name")
     private String lastname;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "phone_number")
     private String phone;
 
     public User() {

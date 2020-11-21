@@ -6,6 +6,8 @@ import it.si.training.DAOImpl.CarDAOJDBCImpl;
 import it.si.training.DAOImpl.UserDAOJDBCImpl;
 import it.si.training.model.Car;
 import it.si.training.model.User;
+import it.si.training.utility.CarDaoFactory;
+import it.si.training.utility.UserDaoFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,13 @@ import java.util.List;
 
 @WebServlet("/car/detail")
 public class DetailCarController extends HttpServlet {
+
+    CarDAO<Car> carDao = null;
+
+    @Override
+    public void init() throws ServletException {
+        carDao = CarDaoFactory.getCarDAO("jpa");
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,13 +43,11 @@ public class DetailCarController extends HttpServlet {
     }
 
     private Car carDetail(String id) {
-        CarDAO carDao = new CarDAOJDBCImpl();
         return carDao.findCar(Long.parseLong(id));
     }
 
     private List<User> userList(){
-        UserDAO userDao = new UserDAOJDBCImpl();
-        return userDao.findAll();
+        return UserDaoFactory.getUserDAO("jpa").findAll();
     }
 
 }
