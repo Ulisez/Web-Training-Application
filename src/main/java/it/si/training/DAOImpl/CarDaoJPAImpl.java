@@ -64,7 +64,7 @@ public class CarDaoJPAImpl implements CarDAO<Car> {
     }
 
     @Override
-    public Car findCar(Long id) {
+    public Car find(Long id) {
         Car car = null;
         Transaction transaction = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -83,7 +83,6 @@ public class CarDaoJPAImpl implements CarDAO<Car> {
     }
 
 
-
     @Override
     public void delete(Long id) {
         Transaction transaction = null;
@@ -91,6 +90,7 @@ public class CarDaoJPAImpl implements CarDAO<Car> {
             transaction = session.beginTransaction();
             //recupero l'oggetto con l''id pasasto come parametro e dopodiché posso eliminarlo
             Car car = session.get(Car.class,id);
+            System.out.println(car);
             session.delete(car);
             transaction.commit();
 

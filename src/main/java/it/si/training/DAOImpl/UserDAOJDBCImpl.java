@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserDAOJDBCImpl implements UserDAO<User> {
 
@@ -109,15 +111,20 @@ public class UserDAOJDBCImpl implements UserDAO<User> {
         return users;
     }
 
+    @Override
+    public User find(Long id) {
+        return null;
+    }
 
-    public List<Car> findUserCars(Long userId) {
-        List<Car> cars = null;
+
+    public Set<Car> findUserCars(Long userId) {
+        Set<Car> cars = null;
         String queryFindCars = "SELECT c.carId, c.brand, c.model, c.category, c.price FROM purchases p INNER JOIN cars c ON p.carId=c.carId and p.userId=?";
         try{
         PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(queryFindCars);
         preparedStatement.setLong(1,userId);
         ResultSet result = preparedStatement.executeQuery();
-        cars = new ArrayList<Car>();
+        cars = new HashSet<>();
         while(result.next()){
             Car car = new Car();
             car.setCarId(Long.parseLong(result.getString(1)));
@@ -134,6 +141,11 @@ public class UserDAOJDBCImpl implements UserDAO<User> {
         }
 
         return cars;
+    }
+
+    @Override
+    public void addNewCar(Long userId, Long carId) {
+
     }
 
     private void close(PreparedStatement statement, ResultSet resultSet) {

@@ -31,7 +31,7 @@
     <hr class="my-4" style="width:400px; background-color:tomato;">
     <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
     <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Le nostre Auto</a>
     </p>
 </div>
 
@@ -40,22 +40,29 @@
         <%-- form update user data   --%>
         <div class="col-lg-4">
             <h3 class="display-5 d-flex mb-4 justify-content-center">Aggiungi un Auto</h3>
-            <form method="post" action="<c:url value="/car/save"/>">
+            <form method="post" action="<c:url value="/car"/>">
+                <div class="form-group">
+                    <input type="hidden" class="form-control"  name="command" value="ADD">
+                </div>
                 <div class="form-group">
                     <label>Marchio</label>
-                    <input type="text" class="form-control" placeholder="Inserire la marca" name="name">
+                    <input type="text" class="form-control" placeholder="Inserire la marca" name="brand">
                 </div>
                 <div class="form-group">
                     <label>Modello</label>
-                    <input type="text" class="form-control" placeholder="Inserire il modello" name="lastname">
+                    <input type="text" class="form-control" placeholder="Inserire il modello" name="model">
                 </div>
                 <div class="form-group">
                     <label>Categoria</label>
-                    <input type="text" class="form-control"  placeholder="Inserire la categoria" name="address">
+                    <input type="text" class="form-control"  placeholder="Inserire la categoria" name="category">
+                </div>
+                <div class="form-group">
+                    <label>Descrizione</label>
+                    <input type="text" class="form-control"  placeholder="Descrizione" name="description">
                 </div>
                 <div class="form-group">
                     <label>Prezzo</label>
-                    <input type="text" class="form-control"  placeholder="Inserire il prezzo" name="phone">
+                    <input type="text" class="form-control"  placeholder="Inserire il prezzo" name="price">
                 </div>
                 <button type="submit" class="btn btn-dark">Aggiungi Auto</button>
                 <button type="reset" class="btn btn-primary">Reset</button>
@@ -89,8 +96,9 @@
                                 <td>${car.category}</td>
                                 <td>${car.price}</td>
                                 <td>
-                                    <form method="post" action="<c:url value="/car/delete"/>">
-                                        <input type="hidden" name="userId" value="${carId}">
+                                    <form method="post" action="<c:url value="/car"/>">
+                                            <input type="hidden" class="form-control"  name="command" value="DELETE">
+                                            <input type="hidden" name="carId" value="${car.carId}">
                                         <button class="btn bg-danger text-white" type="submit">Elimina</button>
                                     </form>
                                 </td>

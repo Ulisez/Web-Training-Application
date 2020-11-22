@@ -1,6 +1,8 @@
 package it.si.training.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "car")
@@ -8,7 +10,7 @@ public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "carId")
+    @Column(name = "CAR_ID")
     private Long carId;
 
     @Column(name = "brand")
@@ -25,6 +27,9 @@ public class Car {
 
     @Column(name = "price")
     private double price;
+
+    @ManyToMany(mappedBy = "cars")
+    private Set<User> users = new HashSet<>();
 
     public Car() {
     }
@@ -93,6 +98,8 @@ public class Car {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 
     @Override
     public String toString() {

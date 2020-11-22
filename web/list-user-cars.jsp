@@ -20,7 +20,10 @@
     <title>Auto</title>
 </head>
 <body>
-<h1 align="center"> Ciao <c:out value="${name}"/> Sotto trovi l'elenco delle tue auto </h1>
+
+<%@include file="header.html" %>
+
+<h1 align="center"> Ciao <c:out value="${name}"/> <c:out value="${lastname}"/> ecco l'elenco delle tue auto </h1>
 
 <div class="container mb-3 mt-4">
     <div class="table-responsive">
@@ -35,7 +38,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${cars}" var="car">
+          <%--  <c:forEach items="${cars}" var="car">
                 <tr>
                     <td>${car.carId}</td>
                     <td>${car.brand}</td>
@@ -43,7 +46,7 @@
                     <td>${car.category}</td>
                     <td>${car.price} </td>
                 </tr>
-            </c:forEach>
+            </c:forEach> --%>
 
             </tbody>
         </table>

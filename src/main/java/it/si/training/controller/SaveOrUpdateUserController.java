@@ -37,7 +37,7 @@ public class SaveOrUpdateUserController extends HttpServlet {
         String phone = req.getParameter("phone");
 
         if (userId == null) {
-            //creo l'utente e lo passo alal funzione saveUser che chiamerà poi l'oggetto che implementa il DAO per l'accesso ai dati
+            //creo l'utente e lo passo alla funzione saveUser che chiamerà poi l'oggetto che implementa il DAO per l'accesso ai dati
             addUser(new User(name, lastname, address, phone));
         } else {
             updateUser(new User(Long.parseLong(userId),name, lastname, address, phone));

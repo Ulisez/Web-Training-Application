@@ -2,6 +2,7 @@ package it.si.training.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Ulises Sanchez
@@ -28,6 +29,15 @@ public class User implements Serializable {
 
     @Column(name = "phone_number")
     private String phone;
+
+    @ManyToMany
+    @JoinTable (
+            name = "user_cars",
+            joinColumns = @JoinColumn(name = "userId", referencedColumnName = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "carId", referencedColumnName = "CAR_ID")
+    )
+    private Set<Car> cars = new HashSet<>();
+
 
     public User() {
     }
@@ -87,6 +97,14 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
+    public Set<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -96,5 +114,23 @@ public class User implements Serializable {
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userId, user.userId) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(lastname, user.lastname) &&
+                Objects.equals(address, user.address) &&
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(cars, user.cars);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, name, lastname, address, phone, cars);
     }
 }

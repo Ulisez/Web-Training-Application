@@ -64,7 +64,7 @@ public class CarDAOJDBCImpl implements CarDAO<Car> {
     }
 
     @Override
-    public Car findCar(Long id) {
+    public Car find(Long id) {
         Car car = null;
         String findQuery = "SELECT* FROM cars WHERE carId=?";
         try {

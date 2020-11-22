@@ -4,5 +4,4 @@ import it.si.training.model.Car;
 
 public interface CarDAO<T> extends DAOGeneric<T>{
 
-    public Car findCar(Long id);
 }

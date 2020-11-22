@@ -40,6 +40,7 @@ public class CarController extends HttpServlet {
             req.getRequestDispatcher("car.jsp").forward(req,resp);
         }else{
             chooseOperation(command, req, resp);
+            resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath() + "/car"));
         }
     }
 

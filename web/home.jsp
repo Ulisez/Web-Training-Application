@@ -159,8 +159,7 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <form action="<c:url value="/user/show/cars"/>" method="post">
-                                        <input type="hidden" name="name" value="${user.name}">
+                                    <form action="<c:url value="/user/list/cars"/>" method="post">
                                         <input type="hidden" name="userId" value="${user.userId}">
                                         <button class="btn bg-info text-white" type="submit">Auto</button>
                                     </form>

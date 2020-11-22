@@ -34,6 +34,8 @@ public interface DAOGeneric<T> {
      * Restituisce la lista con tutti gli oggetti
      * @return la lista degli elementi di tipo T
      */
-    List<T> findAll();
+    public List<T> findAll();
+
+    public T find(Long id);
 
 }

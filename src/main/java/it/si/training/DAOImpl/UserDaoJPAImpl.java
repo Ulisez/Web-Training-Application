@@ -3,6 +3,7 @@ package it.si.training.DAOImpl;
 import it.si.training.DAO.UserDAO;
 import it.si.training.model.Car;
 import it.si.training.model.User;
+import it.si.training.utility.CarDaoFactory;
 import it.si.training.utility.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,13 +13,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Set;
 
 public class UserDaoJPAImpl implements UserDAO<User> {
 
-    @Override
-    public List<Car> findUserCars(Long userId) {
-        return null;
-    }
 
     @Override
     public void save(User user) {
@@ -105,5 +103,52 @@ public class UserDaoJPAImpl implements UserDAO<User> {
         }
         return users;
     }
+
+    @Override
+    public User find(Long id) {
+        User user = null;
+        Transaction transaction = null;
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            user = session.get(User.class,id);
+            transaction.commit();
+
+        }catch (Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    @Override
+    public Set<Car> findUserCars(Long userId) {
+        return null;
+    }
+
+    @Override
+    public void addNewCar(Long userId, Long carId) {
+        User user = null;
+        Car car  = null;
+        Transaction transaction = null;
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction  = session.beginTransaction();
+            user = session.get(User.class,userId);
+            car = CarDaoFactory.getCarDAO("jpa").find(carId);
+            user.getCars().add(car);
+            session.persist(user);
+            //session.update(user);
+            transaction.commit();
+
+        }catch (Exception e){
+            if(transaction != null){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
 
 }

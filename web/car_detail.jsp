@@ -23,8 +23,7 @@
                 <div class="card-body">
                     <h5 class="card-title">${carDetail.brand}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">${carDetail.model}</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
-                        build on the card title and make up the bulk of the card's content.</p>
+                    <p class="card-text">${carDetail.description}</p>
                     <div class="card-header bg-dark text-white">
                         Specifiche tecniche
                     </div>
@@ -40,7 +39,7 @@
             </div>
         </div>
         <div class="col d-flex align-items-center justify-content-center flex-column">
-            <form action="<c:url value="/car/purchase"/>" method="post" style="width:100%;">
+            <form action="<c:url value="/car/detail"/>" method="post" style="width:100%;">
                 <div class="form-group">
                     <input type="hidden" name="carId" value="${carDetail.carId}">
                 </div>
@@ -49,7 +48,7 @@
                     <select class="form-control" name="userSelected">
                         <option>Cliente</option>
                         <c:forEach items="${userList}" var="user">
-                            <option value="${user.name} ${user.userId}">${user.name} ${user.lastname}</option>
+                            <option value="${user.userId}">${user.name} ${user.lastname}</option>
                         </c:forEach>
                     </select>
                 </div>

@@ -33,7 +33,7 @@ public class DeleteUserController extends HttpServlet {
         if( userId == null || userId.equals("") ){
             req.getRequestDispatcher("/").forward(req,resp);
         }else{
-
+            deleteUser(userId);
             resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath() + "/"));
         }
     }

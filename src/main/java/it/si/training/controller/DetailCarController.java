@@ -21,10 +21,12 @@ import java.util.List;
 public class DetailCarController extends HttpServlet {
 
     CarDAO<Car> carDao = null;
+    UserDAO<User> userDao = null;
 
     @Override
     public void init() throws ServletException {
         carDao = CarDaoFactory.getCarDAO("jpa");
+        userDao = UserDaoFactory.getUserDAO("jpa");
     }
 
     @Override
@@ -34,20 +36,47 @@ public class DetailCarController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String carId = req.getParameter("carId");
-        if(carId != null && !carId.equals("")) {
-            req.setAttribute("carDetail",carDetail(carId));
+          handleRequest(req,resp);
+
+    }
+
+    private void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+         String carId  = req.getParameter("carId");
+         String userId = req.getParameter("userSelected");
+
+        if(userId != null && !userId.equals("")) {
+            buyCar(Long.parseLong(userId),Long.parseLong(carId));
+           resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath()) + "/");
+
+        }else{
+            req.setAttribute("carDetail",carDetail(Long.parseLong(carId)));
             req.setAttribute("userList",userList());
             req.getRequestDispatcher( "/car_detail.jsp").forward(req,resp);
         }
     }
 
-    private Car carDetail(String id) {
-        return carDao.findCar(Long.parseLong(id));
+    private void buyCar(Long userId, Long carId){
+        userDao.addNewCar(userId,carId);
     }
 
+    private Car carDetail(Long id) {
+        return carDao.find(id);
+    }
+
+    private User userDetail(Long id){
+        return  userDao.find(id);
+    }
     private List<User> userList(){
         return UserDaoFactory.getUserDAO("jpa").findAll();
     }
+
+   /* private String splitUserInformation(HttpServletRequest req, String userInformation) {
+        String[] information = userInformation.split(" ");
+        req.setAttribute("name",information[0]);
+        req.setAttribute("userId",Long.parseLong(information[1]));
+        //restituisce l'id dell'utente
+        return information[1];
+    } */
 
 }
