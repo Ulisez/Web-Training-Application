@@ -41,15 +41,6 @@ public class HomeController extends HttpServlet {
         //inoltra il controllo a home.jsp che si occuperà di visualizzare i dati
         req.getRequestDispatcher("home.jsp").forward(req, resp);
 
-
-   /*   bad practice, il servlet deve solo ocucparsi di processare la richiesta e mai
-        di scrivere i dati da mostrare, sarà la JSP a occuparsi di mostrare i dati
-        PrintWriter out = resp.getWriter();
-        out.print("<html><body>");
-        out.print("<h3>Hello Servlet</h3>");
-        out.print("</body></html>");
-
-        */
     }
 
     @Override

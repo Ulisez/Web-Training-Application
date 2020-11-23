@@ -53,7 +53,8 @@ public class ListUserCarsController extends HttpServlet {
         User user = findUser(id);
         req.setAttribute("name",user.getName());
         req.setAttribute("lastname",user.getLastname());
-        //req.setAttribute("cars",user.getCars().toArray());
+        req.setAttribute("cars",user.getCars().toArray());
+
     }
 
     private User findUser(Long id){

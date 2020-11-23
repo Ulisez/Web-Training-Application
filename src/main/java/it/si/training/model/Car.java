@@ -1,12 +1,14 @@
 package it.si.training.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "car")
-public class Car {
+public class Car implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +30,7 @@ public class Car {
     @Column(name = "price")
     private double price;
 
-    @ManyToMany(mappedBy = "cars")
+    @ManyToMany(mappedBy = "cars", fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<>();
 
     public Car() {
@@ -99,7 +101,13 @@ public class Car {
         this.description = description;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
 
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 
     @Override
     public String toString() {
@@ -112,4 +120,6 @@ public class Car {
                 ", price=" + price +
                 '}';
     }
+
+
 }

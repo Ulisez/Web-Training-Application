@@ -12,6 +12,7 @@ import org.hibernate.query.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -125,21 +126,17 @@ public class UserDaoJPAImpl implements UserDAO<User> {
 
     @Override
     public Set<Car> findUserCars(Long userId) {
-        return null;
+        Set<Car> cars=null;
+        return cars;
     }
 
     @Override
     public void addNewCar(Long userId, Long carId) {
-        User user = null;
-        Car car  = null;
         Transaction transaction = null;
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction  = session.beginTransaction();
-            user = session.get(User.class,userId);
-            car = CarDaoFactory.getCarDAO("jpa").find(carId);
-            user.getCars().add(car);
-            session.persist(user);
-            //session.update(user);
+            User user = session.get(User.class,userId);
+            user.getCars().add(session.get(Car.class, carId));
             transaction.commit();
 
         }catch (Exception e){

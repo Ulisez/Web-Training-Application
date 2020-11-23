@@ -3,15 +3,16 @@ package it.si.training.controller;
 import it.si.training.DAO.PurchaseDAO;
 import it.si.training.DAOImpl.PurchaseDaoJDBCImpl;
 import it.si.training.model.Purchase;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.StringTokenizer;
 
+/**
+ * Classe utlizzata per gestire l'acquisto delle auto nella versione JDBC
+ */
 @WebServlet("/car/purchase")
 public class PurchaseCarController extends HttpServlet {
 

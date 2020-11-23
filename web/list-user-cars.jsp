@@ -38,7 +38,7 @@
             </tr>
             </thead>
             <tbody>
-          <%--  <c:forEach items="${cars}" var="car">
+           <c:forEach items="${cars}" var="car">
                 <tr>
                     <td>${car.carId}</td>
                     <td>${car.brand}</td>
@@ -46,7 +46,7 @@
                     <td>${car.category}</td>
                     <td>${car.price} </td>
                 </tr>
-            </c:forEach> --%>
+            </c:forEach>
 
             </tbody>
         </table>

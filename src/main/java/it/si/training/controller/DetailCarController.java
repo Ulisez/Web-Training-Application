@@ -46,8 +46,8 @@ public class DetailCarController extends HttpServlet {
          String userId = req.getParameter("userSelected");
 
         if(userId != null && !userId.equals("")) {
-            buyCar(Long.parseLong(userId),Long.parseLong(carId));
-           resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath()) + "/");
+            buyCar(Long.parseLong(userId),(Long.parseLong(carId)));
+            resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath()) + "/");
 
         }else{
             req.setAttribute("carDetail",carDetail(Long.parseLong(carId)));
@@ -57,6 +57,7 @@ public class DetailCarController extends HttpServlet {
     }
 
     private void buyCar(Long userId, Long carId){
+        User user = userDao.find(userId);
         userDao.addNewCar(userId,carId);
     }
 
